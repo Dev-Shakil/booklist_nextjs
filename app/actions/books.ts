@@ -29,3 +29,22 @@ export async function createBook({
     return { success: false, message: 'Failed to create book' };
   }
 }
+export type Book = {
+  id: string;
+  title: string;
+  author: string;
+  genre: string;
+  publishedAt: string;
+};
+
+export async function getBooks() {
+  try {
+    if (!prisma.book) throw new Error("Prisma book model is undefined!");
+
+    const books = await prisma.book.findMany();
+    return books;
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    return [];
+  }
+}
